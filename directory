@@ -1,0 +1,10 @@
+341-Group/
+│
+├── server.js
+├── views/
+│   ├── login.ejs
+│   ├── register.ejs
+│   └── dashboard.ejs
+├── public/
+│   └── styles.css
+└── package.json
