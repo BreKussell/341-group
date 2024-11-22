@@ -24,30 +24,7 @@ exports.login = (req, res) => {
     res.status(401).render('login', { message: 'Get thee hense Hacker!' });
 };
 
-// Register function 
-exports.register = (req, res) => {
-    const { username, password } = req.body;
 
-    // Read and parse the JSON file
-    const data = JSON.parse(fs.readFileSync(path));
-
-    // Check if username already exists
-    const userExists = data.users.some(user => user.username === username);
-    if (userExists) {
-        return res.render('register', { message: 'Username already exists. Please choose another.' });
-    }
-
-    // Add the new user to the 'users' array with plain-text password
-    const newUser = { username, password };
-    data.users.push(newUser);
-
-    
-    // Write the updated data back to the JSON file
-    fs.writeFileSync(path, JSON.stringify(data, null, 2));
-
-    // Redirect to login page with a success message
-    res.status(201).render('login', { message: 'Registration successful! Log in.' });
-};
 
 // Logout function
 exports.logout = (req, res) => {
