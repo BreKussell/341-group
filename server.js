@@ -1,39 +1,32 @@
 const express = require('express');
-const path = require('path');
+const bodyParser = require('body-parser');
+const accountRoutes = require('./routes/accountRoutes');
+const port = 3000
+
+
 const app = express();
-const port = 3000;
+const PORT = 3000;
 
-// Middleware to serve static files (like CSS)
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static('public'));
 
-// Middleware to parse form data
-app.use(express.urlencoded({ extended: true }));
 
-// Set view engine to ejs
 app.set('view engine', 'ejs');
 
-// Route to render login page
-app.get('/', (req, res) => {
-  res.render('login');
+
+// Root route to send users to the login page with a default empty message
+app.get('/', (req, res) => res.render('login', { message: '' }));
+
+// Routes
+app.use('/account', accountRoutes);
+
+
+// Error handling
+app.use((req, res) => {
+    res.status(404).send('404 - Page Not Found');
 });
 
-// Route to handle login form submission
-app.post('/login', (req, res) => {
-  const { username, password } = req.body;
-  // Temporary login credentials
-  if (username === 'user1' && password === 'password') {
-    return res.redirect('/dashboard');
-  } else {
-    return res.send('Invalid login credentials');
-  }
-});
-
-// Route to render dashboard page (after successful login)
-app.get('/dashboard', (req, res) => {
-  res.render('dashboard');
-});
-
-// Start the server
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${port}`);
 });
