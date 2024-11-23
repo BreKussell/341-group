@@ -1,19 +1,19 @@
 [
     {
       "user1": {
-        "user_name": "Tester",
+        "username": "Tester",
         "password": "password",
         "age": 24,
         "date_of_birth": "01/01/2000"
       },
       "user2": {
-        "user_name": "Tester2",
+        "username": "Tester2",
         "password": "password2",
         "age": 14,
         "date_of_birth": "01/01/2010"
       },
       "user3": {
-        "user_name": "Tester3",
+        "username": "Tester3",
         "password": "password3",
         "age": 4,
         "date_of_birth": "01/01/2020"
