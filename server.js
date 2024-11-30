@@ -1,7 +1,9 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
+const session = require('express-session');
 const accountRoutes = require('./routes/accountRoutes');
-const port = 3000
+
 
 
 const app = express();
@@ -13,6 +15,13 @@ app.use(express.static('public'));
 
 
 app.set('view engine', 'ejs');
+
+// Configure session management with a session secret
+app.use(session({
+    secret: process.env.SESSION_SECRET || 'defaultSecret',  
+    resave: false,
+    saveUninitialized: true
+}));
 
 
 // Root route to send users to the login page with a default empty message
