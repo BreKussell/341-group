@@ -1,0 +1,45 @@
+{
+  "users": [
+    {
+      "username": "user1",
+      "password": "password1",
+      "goals": {
+        "Monday": [
+          {
+            "type": "Fitness",
+            "text": "Run 5km"
+          },
+          {
+            "type": "Updated",
+            "text": "get at least 7 hours of seep "
+          }
+        ],
+        "Tuesday": [
+          {
+            "type": "Academic",
+            "text": "Study for Calc test"
+          }
+        ],
+        "Saturday": []
+      }
+    },
+    {
+      "username": "user2",
+      "password": "password2",
+      "goals": {
+        "Friday": [
+          {
+            "type": "Spiritual",
+            "text": "Finish Alma"
+          }
+        ],
+        "Sunday": [
+          {
+            "type": "Other",
+            "text": "Grocery Shopping"
+          }
+        ]
+      }
+    }
+  ]
+}

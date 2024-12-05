@@ -1,10 +1,21 @@
 341-Group/
-│
-├── server.js
-├── views/
+├── /controllers
+│   ├── accountController.js
+│   ├── plannerController.js       
+├── /models
+│   ├── accountModel.js
+│   ├── plannerModel.js            
+├── /routes
+│   ├── accountRoutes.js
+│   ├── plannerRoutes.js           
+├── /views
 │   ├── login.ejs
-│   ├── register.ejs
-│   └── dashboard.ejs
-├── public/
+│   ├── dashboard.ejs           
+│   ├── addGoal.ejs                
+│   ├── updateGoal.ejs             
+├── /data
+│   ├── data.json
+├── /public
 │   └── styles.css
+├── server.js           
 └── package.json

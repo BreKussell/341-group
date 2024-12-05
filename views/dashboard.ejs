@@ -8,79 +8,40 @@
 
 </head>
 <body>
-  <header>
-    <h1>Welcome</h1>
-    <nav>
-      <a href="/account/logout">Logout</a>  
-      <a href="#">Edit Weekly goals</a>
-      <a href="#">Clear All</a>
-    </nav>
-    
-  </header>
-  <section>
-    <h2>Weekly Planner</h2>
-    <table>
-        <tr>
-          <td>
-            <h3>Monday</h3>
-            <ul>
-              <li>Item 1</li>
-              <li>Item 2</li>
-              <li>Item 3</li>
-            </ul>
-          </td>
-          <td>
-            <h3>Tuesday</h3>
-            <ul>
-              <li>Item 1</li>
-              <li>Item 2</li>
-              <li>Item 3</li>
-            </ul>
-          </td>
-          <td>
-            <h3>Wednesday</h3>
-            <ul>
-              <li>Item 1</li>
-              <li>Item 2</li>
-              <li>Item 3</li>
-            </ul>
-          </td>
-          <td>
-            <h3>Thursday</h3>
-            <ul>
-              <li>Item 1</li>
-              <li>Item 2</li>
-              <li>Item 3</li>
-            </ul>
-          </td>
-          <td>
-            <h3>Friday</h3>
-            <ul>
-              <li>Item 1</li>
-              <li>Item 2</li>
-              <li>Item 3</li>
-            </ul>
-          </td>
-          <td>
-            <h3>Saturday</h3>
-            <ul>
-              <li>Item 1</li>
-              <li>Item 2</li>
-              <li>Item 3</li>
-            </ul>
-          </td>
-          <td>
-            <h3>Sunday</h3>
-            <ul>
-              <li>Item 1</li>
-              <li>Item 2</li>
-              <li>Item 3</li>
-            </ul>
-          </td>
-        </tr>
-      </table>
-      
-  
-  </section>
+
+  <h1>Weekly Planner</h1>
+  <table border="1">
+      <thead>
+          <tr>
+              <th>Monday</th>
+              <th>Tuesday</th>
+              <th>Wednesday</th>
+              <th>Thursday</th>
+              <th>Friday</th>
+              <th>Saturday</th>
+              <th>Sunday</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr>
+              <% ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].forEach(day => { %>
+                  <td>
+                      <h3><%= day %></h3>
+                      <% if (goals[day]) { %>
+                          <ul>
+                              <% goals[day].forEach(goal => { %>
+                                  <li><%= goal.type %>: <%= goal.text %></li>
+                              <% }) %>
+                          </ul>
+                      <% } else { %>
+                          <p>No goals</p>
+                      <% } %>
+                  </td>
+              <% }) %>
+          </tr>
+      </tbody>
+  </table>
+  <a href="/planner/addGoal">Add Goal</a>
+  <a href="/planner/updateGoal">Update Goal</a>
 </body>
 </html>

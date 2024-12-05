@@ -15,16 +15,15 @@ exports.login = (req, res) => {
     if (user && user.password === password) {
         req.session.user = { username: user.username };
 
-
-        // Pass user data to the dashboard view
-        return res.status(200).render('dashboard', { message: `Welcome ${username}!` });
+        // Redirect to the dashboard
+        return res.redirect('/planner/dashboard');
     }
 
     // If user not found or password doesn't match
-    res.status(401).render('login', { message: 'Get thee hense Hacker!' });
+    res.status(401).render('login', { message: 'Invalid credentials. Please try again.' });
 };
 
-// Register function 
+// Register function
 exports.register = (req, res) => {
     const { username, password } = req.body;
 
@@ -38,10 +37,9 @@ exports.register = (req, res) => {
     }
 
     // Add the new user to the 'users' array with plain-text password
-    const newUser = { username, password };
+    const newUser = { username, password, goals: {} };
     data.users.push(newUser);
 
-    
     // Write the updated data back to the JSON file
     fs.writeFileSync(path, JSON.stringify(data, null, 2));
 
@@ -52,6 +50,6 @@ exports.register = (req, res) => {
 // Logout function
 exports.logout = (req, res) => {
     req.session.destroy(() => {
-        res.redirect('/');  // Redirect to the root route, which renders login.ejs
+        res.redirect('/'); // Redirect to the root route, which renders login.ejs
     });
 };

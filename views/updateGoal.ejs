@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <link rel="stylesheet" href="/styles.css">
+
+</head>
+<body>
+    <h1>Update Goal</h1>
+    <form action="/planner/updateGoal" method="POST">
+        <label for="currentGoal">Current Goal:</label>
+        <select name="currentGoal" id="currentGoal">
+            <% Object.keys(goals).forEach(day => { %>
+                <% goals[day].forEach(goal => { %>
+                    <option value="<%= goal.text %>"><%= day %>: <%= goal.type %> - <%= goal.text %></option>
+                <% }) %>
+            <% }) %>
+        </select>
+        <br>
+        <label for="newDay">New Day:</label>
+        <select name="newDay" id="newDay">
+            <% ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].forEach(day => { %>
+                <option value="<%= day %>"><%= day %></option>
+            <% }) %>
+        </select>
+        <br>
+        <label for="newText">New Goal Text:</label>
+        <input type="text" name="newText" id="newText" required>
+        <br>
+        <button type="submit">Update Goal</button>
+    </form>
+</body>
+</html>
