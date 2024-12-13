@@ -4,12 +4,7 @@
       "username": "user1",
       "password": "password1",
       "goals": {
-        "Monday": [
-          {
-            "type": "Fitness",
-            "text": "run 5km"
-          }
-        ],
+        "Monday": [],
         "Tuesday": [
           {
             "type": "Academic",
@@ -20,7 +15,7 @@
         "Sunday": [
           {
             "type": "Updated",
-            "text": "get at least 7 hours of seep "
+            "text": "get at least 7 hours of sleep "
           }
         ]
       }
@@ -42,6 +37,11 @@
           }
         ]
       }
+    },
+    {
+      "username": "user3",
+      "password": "password3",
+      "goals": {}
     }
   ]
 }
