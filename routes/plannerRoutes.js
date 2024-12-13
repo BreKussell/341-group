@@ -17,4 +17,10 @@ router.get('/updateGoal', (req, res) => res.render('updateGoal', { goals: planne
 // Route to handle updating a goal
 router.post('/updateGoal', plannerController.updateGoal);
 
+// Route to render the deleteGoal page
+router.get('/deleteGoal', (req, res) => res.render('deleteGoal', { goals: plannerController.getGoalsForUpdate(req) }));
+
+// Route to handle deleting a goal
+router.post('/deleteGoal', plannerController.deleteGoal);
+
 module.exports = router; // Export the router

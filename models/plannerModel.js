@@ -47,3 +47,17 @@ exports.updateGoal = (username, currentText, newDay, newText) => {
         console.error('Error updating goal:', error); // Log errors
     }
 };
+
+// Delete a goal for a specific user
+exports.deleteGoal = (username, day, goalText) => {
+    try {
+        const data = JSON.parse(fs.readFileSync(path)); // Read and parse the JSON file
+        const user = data.users.find(u => u.username === username); // Find the user by username
+        if (user && user.goals[day]) {
+            user.goals[day] = user.goals[day].filter(goal => goal.text !== goalText); // Remove goal with matching text
+            fs.writeFileSync(path, JSON.stringify(data, null, 2)); // Save changes to the file
+        }
+    } catch (error) {
+        console.error('Error deleting goal:', error); // Log errors
+    }
+};

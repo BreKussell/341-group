@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delete Goal</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <h1>Delete a Goal</h1>
+  <a href="/planner/dashboard">Back to Dashboard</a>
+
+  <form action="/planner/deleteGoal" method="POST">
+    <label for="day">Select Day:</label>
+    <select name="day" id="day" required>
+      <% Object.keys(goals).forEach(day => { %>
+        <option value="<%= day %>"><%= day %></option>
+      <% }) %>
+    </select>
+    
+    <label for="goalText">Select Goal:</label>
+    <select name="goalText" id="goalText" required>
+      <% Object.keys(goals).forEach(day => { %>
+        <% goals[day].forEach(goal => { %>
+          <option value="<%= goal.text %>"><%= day %>: <%= goal.type %> - <%= goal.text %></option>
+        <% }) %>
+      <% }) %>
+    </select>
+    
+    <button type="submit">Delete Goal</button>
+  </form>
+</body>
+</html>

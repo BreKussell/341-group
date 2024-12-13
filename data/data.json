@@ -7,17 +7,13 @@
         "Monday": [
           {
             "type": "Fitness",
-            "text": "Run 5km"
+            "text": "run 5km"
           }
         ],
         "Tuesday": [
           {
             "type": "Academic",
             "text": "Study for Calc test"
-          },
-          {
-            "type": "Other",
-            "text": "get 7 hours of sleep"
           }
         ],
         "Saturday": [],

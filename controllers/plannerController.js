@@ -36,3 +36,13 @@ exports.getGoalsForUpdate = (req) => {
     }
     return {}; // Return empty object if unauthenticated
 };
+
+// Delete a goal
+exports.deleteGoal = (req, res) => {
+    if (!req.session.user || !req.session.user.username) { // Ensure user is authenticated
+        return res.redirect('/account/login'); // Redirect to login if not authenticated
+    }
+    const { goalText, day } = req.body; // Extract goal details for deletion
+    plannerModel.deleteGoal(req.session.user.username, day, goalText); // Delete the goal
+    res.redirect('/planner/dashboard'); // Redirect to dashboard
+};
