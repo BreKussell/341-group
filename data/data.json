@@ -16,7 +16,12 @@
             "text": "Study for Calc test"
           }
         ],
-        "Saturday": [],
+        "Saturday": [
+          {
+            "type": "Fitness",
+            "text": "100 push ups"
+          }
+        ],
         "Sunday": [
           {
             "type": "Updated",
