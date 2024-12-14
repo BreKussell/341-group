@@ -1,21 +1,22 @@
 341-Group/
 ├── /controllers
-│   ├── accountController.js
-│   ├── plannerController.js       
+│   ├── accountController.ts
+│   ├── plannerController.ts      
 ├── /models
-│   ├── accountModel.js
-│   ├── plannerModel.js            
+│   ├── accountModel.ts
+│   ├── plannerModel.ts           
 ├── /routes
-│   ├── accountRoutes.js
-│   ├── plannerRoutes.js           
+│   ├── accountRoutes.ts
+│   ├── plannerRoutes.ts          
 ├── /views
 │   ├── login.ejs
 │   ├── dashboard.ejs           
 │   ├── addGoal.ejs                
-│   ├── updateGoal.ejs             
-├── /data
-│   ├── data.json
+│   ├── updateGoal.ejs  
+│   ├── deleteGoal.ejs              
+├── /db
+│   ├── connect.ts
 ├── /public
 │   └── styles.css
-├── server.js           
+├── server.ts           
 └── package.json
