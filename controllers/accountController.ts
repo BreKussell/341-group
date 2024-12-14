@@ -21,7 +21,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
             }
         }
 
-        res.status(401).render('login', { message: 'Incorrect username or password.' }); // Render login with error
+        res.status(401).render('login', { message: 'Get thee hense hacker!' }); // Render login with error
     } catch (error) {
         console.error(error);
         res.status(500).render('login', { message: 'An error occurred. Please try again.' });
