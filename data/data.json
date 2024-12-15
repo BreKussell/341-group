@@ -20,12 +20,25 @@
           {
             "type": "Fitness",
             "text": "100 push ups"
+<<<<<<< HEAD
+=======
+          },
+          {
+            "type": "Updated",
+            "text": "100 pushups"
+>>>>>>> eff836d969d016b4269d55c0316c11f9834f22b4
           }
         ],
         "Sunday": [
           {
             "type": "Updated",
             "text": "get at least 7 hours of seep "
+          }
+        ],
+        "Wednesday": [
+          {
+            "type": "Academic",
+            "text": "No class"
           }
         ]
       }
