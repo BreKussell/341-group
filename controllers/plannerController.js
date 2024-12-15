@@ -1,48 +1,60 @@
 const plannerModel = require('../models/plannerModel'); // Import the planner model
 
 // Display the dashboard with goals
-exports.dashboard = (req, res) => {
+exports.dashboard = async (req, res) => {
     if (!req.session.user || !req.session.user.username) { // Ensure user is authenticated
         return res.redirect('/account/login'); // Redirect to login if not authenticated
     }
-    const goals = plannerModel.getGoals(req.session.user.username) || {}; // Retrieve user goals
-    res.status(200).render('dashboard', { goals }); // Render the dashboard with goals
+    try {
+        const goals = await plannerModel.getGoals(req.session.user.username); // Await the async call
+        res.status(200).render('dashboard', { goals }); // Render the dashboard with goals
+    } catch (error) {
+        console.error('Error displaying dashboard:', error); // Log errors
+        res.status(500).send('Internal Server Error');
+    }
 };
 
 // Add a new goal
-exports.addGoal = (req, res) => {
+exports.addGoal = async (req, res) => {
     if (!req.session.user || !req.session.user.username) { // Ensure user is authenticated
         return res.redirect('/account/login'); // Redirect to login if not authenticated
     }
     const { day, type, text } = req.body; // Extract goal details
-    plannerModel.addGoal(req.session.user.username, day, type, text); // Add the goal
-    res.redirect('/planner/dashboard'); // Redirect to dashboard
+    try {
+        await plannerModel.addGoal(req.session.user.username, day, type, text); // Add the goal
+        res.redirect('/planner/dashboard'); // Redirect to dashboard
+    } catch (error) {
+        console.error('Error adding goal:', error); // Log errors
+        res.status(500).send('Internal Server Error');
+    }
 };
 
 // Update an existing goal
-exports.updateGoal = (req, res) => {
+exports.updateGoal = async (req, res) => {
     if (!req.session.user || !req.session.user.username) { // Ensure user is authenticated
         return res.redirect('/account/login'); // Redirect to login if not authenticated
     }
     const { currentGoal, newDay, newText } = req.body; // Extract goal update details
-    plannerModel.updateGoal(req.session.user.username, currentGoal, newDay, newText); // Update the goal
-    res.redirect('/planner/dashboard'); // Redirect to dashboard
-};
-
-// Get goals for the update page
-exports.getGoalsForUpdate = (req) => {
-    if (req.session.user && req.session.user.username) { // Ensure user is authenticated
-        return plannerModel.getGoals(req.session.user.username); // Retrieve goals
+    try {
+        await plannerModel.updateGoal(req.session.user.username, currentGoal, newDay, newText); // Update the goal
+        res.redirect('/planner/dashboard'); // Redirect to dashboard
+    } catch (error) {
+        console.error('Error updating goal:', error); // Log errors
+        res.status(500).send('Internal Server Error');
     }
-    return {}; // Return empty object if unauthenticated
 };
 
 // Delete a goal
-exports.deleteGoal = (req, res) => {
+exports.deleteGoal = async (req, res) => {
     if (!req.session.user || !req.session.user.username) { // Ensure user is authenticated
         return res.redirect('/account/login'); // Redirect to login if not authenticated
     }
     const { goalText, day } = req.body; // Extract goal details for deletion
-    plannerModel.deleteGoal(req.session.user.username, day, goalText); // Delete the goal
-    res.redirect('/planner/dashboard'); // Redirect to dashboard
+    try {
+        await plannerModel.deleteGoal(req.session.user.username, day, goalText); // Delete the goal
+        res.redirect('/planner/dashboard'); // Redirect to dashboard
+    } catch (error) {
+        console.error('Error deleting goal:', error); // Log errors
+        res.status(500).send('Internal Server Error');
+    }
 };

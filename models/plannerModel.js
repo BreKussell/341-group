@@ -1,11 +1,26 @@
-const fs = require('fs'); // File system module for reading/writing files
-const path = './data/data.json'; // Path to the JSON file storing user data
+const mongoose = require('mongoose');
+
+// Define the User schema
+const userSchema = new mongoose.Schema({
+    username: { type: String, required: true, unique: true },
+    goals: {
+        type: Map,
+        of: [
+            {
+                type: { type: String, required: true },
+                text: { type: String, required: true }
+            }
+        ]
+    }
+});
+
+// Create the User model
+const User = mongoose.model('User', userSchema);
 
 // Retrieve goals for a specific user
-exports.getGoals = (username) => {
+exports.getGoals = async (username) => {
     try {
-        const data = JSON.parse(fs.readFileSync(path)); // Read and parse the JSON file
-        const user = data.users.find(u => u.username === username); // Find the user by username
+        const user = await User.findOne({ username }); // Find the user by username
         return user && user.goals ? user.goals : {}; // Return goals or an empty object if none found
     } catch (error) {
         console.error('Error reading goals:', error); // Log errors
@@ -14,14 +29,20 @@ exports.getGoals = (username) => {
 };
 
 // Add a goal for a specific user
-exports.addGoal = (username, day, type, text) => {
+exports.addGoal = async (username, day, type, text) => {
     try {
-        const data = JSON.parse(fs.readFileSync(path)); // Read and parse the JSON file
-        const user = data.users.find(u => u.username === username); // Find the user by username
+        const user = await User.findOne({ username });
         if (user) {
-            if (!user.goals[day]) user.goals[day] = []; // Initialize goals for the day if not present
-            user.goals[day].push({ type, text }); // Add the new goal
-            fs.writeFileSync(path, JSON.stringify(data, null, 2)); // Save changes to the file
+            if (!user.goals.has(day)) user.goals.set(day, []); // Initialize goals for the day if not present
+            user.goals.get(day).push({ type, text }); // Add the new goal
+            await user.save(); // Save changes to the database
+        } else {
+            // If user does not exist, create a new user
+            const newUser = new User({
+                username,
+                goals: { [day]: [{ type, text }] }
+            });
+            await newUser.save();
         }
     } catch (error) {
         console.error('Error adding goal:', error); // Log errors
@@ -29,19 +50,19 @@ exports.addGoal = (username, day, type, text) => {
 };
 
 // Update a goal for a specific user
-exports.updateGoal = (username, currentText, newDay, newText) => {
+exports.updateGoal = async (username, currentText, newDay, newText) => {
     try {
-        const data = JSON.parse(fs.readFileSync(path)); // Read and parse the JSON file
-        const user = data.users.find(u => u.username === username); // Find the user by username
+        const user = await User.findOne({ username });
         if (user) {
-            // Remove the goal with matching text
-            Object.keys(user.goals).forEach(day => {
-                user.goals[day] = user.goals[day].filter(goal => goal.text !== currentText);
+            // Remove the goal with matching text from all days
+            user.goals.forEach((goals, day) => {
+                user.goals.set(day, goals.filter(goal => goal.text !== currentText));
             });
+
             // Add the updated goal to the new day
-            if (!user.goals[newDay]) user.goals[newDay] = [];
-            user.goals[newDay].push({ type: 'Updated', text: newText });
-            fs.writeFileSync(path, JSON.stringify(data, null, 2)); // Save changes to the file
+            if (!user.goals.has(newDay)) user.goals.set(newDay, []);
+            user.goals.get(newDay).push({ type: 'Updated', text: newText });
+            await user.save(); // Save changes to the database
         }
     } catch (error) {
         console.error('Error updating goal:', error); // Log errors
@@ -49,13 +70,17 @@ exports.updateGoal = (username, currentText, newDay, newText) => {
 };
 
 // Delete a goal for a specific user
-exports.deleteGoal = (username, day, goalText) => {
+exports.deleteGoal = async (username, day, goalText) => {
     try {
-        const data = JSON.parse(fs.readFileSync(path)); // Read and parse the JSON file
-        const user = data.users.find(u => u.username === username); // Find the user by username
-        if (user && user.goals[day]) {
-            user.goals[day] = user.goals[day].filter(goal => goal.text !== goalText); // Remove goal with matching text
-            fs.writeFileSync(path, JSON.stringify(data, null, 2)); // Save changes to the file
+        const user = await User.findOne({ username });
+        if (user && user.goals.has(day)) {
+            const updatedGoals = user.goals.get(day).filter(goal => goal.text !== goalText); // Remove goal with matching text
+            if (updatedGoals.length > 0) {
+                user.goals.set(day, updatedGoals);
+            } else {
+                user.goals.delete(day); // Delete the day if no goals are left
+            }
+            await user.save(); // Save changes to the database
         }
     } catch (error) {
         console.error('Error deleting goal:', error); // Log errors
