@@ -16,11 +16,26 @@
             "text": "Study for Calc test"
           }
         ],
-        "Saturday": [],
+        "Saturday": [
+          {
+            "type": "Fitness",
+            "text": "100 push ups"
+          },
+          {
+            "type": "Updated",
+            "text": "100 pushups"
+          }
+        ],
         "Sunday": [
           {
             "type": "Updated",
             "text": "get at least 7 hours of seep "
+          }
+        ],
+        "Wednesday": [
+          {
+            "type": "Academic",
+            "text": "No class"
           }
         ]
       }

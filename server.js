@@ -1,3 +1,4 @@
+const { connectDb } = require('./db/connect')
 require('dotenv').config(); // Load environment variables
 const express = require('express'); // Import Express framework
 const bodyParser = require('body-parser'); // Middleware for parsing request bodies
@@ -5,8 +6,20 @@ const session = require('express-session'); // Session management
 const accountRoutes = require('./routes/accountRoutes'); // Account-related routes
 const plannerRoutes = require('./routes/plannerRoutes'); // Planner-related routes
 
+connectDb()
+  .then(() => {
+    // Start your server after the database connection is established
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  })
+  .catch(err => {
+    console.error('Failed to initialize database connection:', err);
+    process.exit(1); // Exit the process if the connection fails
+  });
+
 const app = express(); // Initialize Express app
-const PORT = 3000; // Define the server port
+const PORT = process.env.PORT || 3001; // Define the server port
 
 app.use(bodyParser.json()); // Parse JSON bodies
 app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded bodies
@@ -40,6 +53,6 @@ app.use((err, req, res, next) => {
 });
 
 // Start the server and listen on the specified port
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
+// app.listen(PORT, () => {
+//     console.log(`Server is running on http://localhost:${PORT}`);
+// });
