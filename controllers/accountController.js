@@ -19,11 +19,7 @@ exports.login = async (req, res) => {
             }
         }
 
-<<<<<<< HEAD
-        res.status(401).render('login', { message: 'Incorrect username or password.' }); // Render login with error
-=======
         res.status(401).render('login', { message: 'get thee hense hacker!.' }); // Render login with error
->>>>>>> eff836d969d016b4269d55c0316c11f9834f22b4
     } catch (error) {
         console.error(error);
         res.status(500).render('login', { message: 'An error occurred. Please try again.' });
