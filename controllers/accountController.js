@@ -19,7 +19,7 @@ exports.login = async (req, res) => {
             }
         }
 
-        res.status(401).render('login', { message: 'get thee hense hacker!' }); // Render login with error
+        res.status(401).render('login', { message: 'get thee hense hacker!.' }); // Render login with error
     } catch (error) {
         console.error(error);
         res.status(500).render('login', { message: 'An error occurred. Please try again.' });
